@@ -1,21 +1,35 @@
 package ru.vspochernin.pieces;
 
 import ru.vspochernin.ChessBoard;
+import ru.vspochernin.model.Color;
+import ru.vspochernin.model.Position;
 
 public abstract class ChessPiece {
 
-    private final String color;
-    private boolean check = true;
+    private final Color color;
+    private boolean isUntouched = true;
 
-    public ChessPiece(String color) {
+    public ChessPiece(Color color) {
         this.color = color;
     }
 
-    public String getColor() {
+    public final Color getColor() {
         return color;
     }
 
-    public abstract boolean canMoveToPosition(ChessBoard chessBoard, int line, int column, int toLine, int toColumn);
+    public final String getColorSymbol() {
+        return color.getValue().substring(0, 1).toLowerCase();
+    }
+
+    public final boolean isUntouched() {
+        return isUntouched;
+    }
+
+    public final void setUntouched(boolean untouched) {
+        isUntouched = untouched;
+    }
+
+    public abstract boolean canMove(ChessBoard chessBoard, Position from, Position to);
 
     public abstract String getSymbol();
 }
