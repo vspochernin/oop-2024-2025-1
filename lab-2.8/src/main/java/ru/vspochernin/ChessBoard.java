@@ -68,7 +68,7 @@ public final class ChessBoard {
             return false;
         }
 
-        chessPieceFrom.setIsUntouchedFalse();
+        chessPieceFrom.setUntouchedFalse();
         setChessPieceAtPosition(chessPieceFrom, to);
         setChessPieceAtPosition(null, from);
         nowPlayerColor = nowPlayerColor.swap();

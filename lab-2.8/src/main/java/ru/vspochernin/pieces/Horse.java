@@ -22,13 +22,13 @@ public final class Horse extends ChessPiece {
             return false;
         }
 
-        return (to.line() == from.line() + 2 && to.column() == from.column() + 1)
-                || (to.line() == from.line() + 2 && to.column() == from.column() - 1)
-                || (to.line() == from.line() - 2 && to.column() == from.column() + 1)
-                || (to.line() == from.line() - 2 && to.column() == from.column() - 1)
-                || (to.line() == from.line() + 1 && to.column() == from.column() + 2)
-                || (to.line() == from.line() + 1 && to.column() == from.column() - 2)
-                || (to.line() == from.line() - 1 && to.column() == from.column() + 2)
-                || (to.line() == from.line() - 1 && to.column() == from.column() - 2);
+        return (to.equals(from.relative(+2, +1))
+                || to.equals(from.relative(+2, -1))
+                || to.equals(from.relative(-2, +1))
+                || to.equals(from.relative(-2, -1))
+                || to.equals(from.relative(+1, +2))
+                || to.equals(from.relative(+1, -2))
+                || to.equals(from.relative(-1, +2))
+                || to.equals(from.relative(-1, -2)));
     }
 }

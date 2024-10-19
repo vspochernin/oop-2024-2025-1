@@ -21,11 +21,11 @@ public abstract class ChessPiece {
         return color.getValue().substring(0, 1).toLowerCase();
     }
 
-    public final boolean getIsUntouched() {
+    public final boolean isUntouched() {
         return isUntouched;
     }
 
-    public final void setIsUntouchedFalse() {
+    public final void setUntouchedFalse() {
         isUntouched = false;
     }
 

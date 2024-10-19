@@ -8,6 +8,10 @@ public record Position(int line, int column) {
         return line < 0 || line > 7 || column < 0 || column > 7;
     }
 
+    public Position relative(int lineDiff, int columnDiff) {
+        return new Position(line + lineDiff, column + columnDiff);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
