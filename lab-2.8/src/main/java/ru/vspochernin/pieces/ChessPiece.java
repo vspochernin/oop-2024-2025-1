@@ -21,12 +21,12 @@ public abstract class ChessPiece {
         return color.getValue().substring(0, 1).toLowerCase();
     }
 
-    public final boolean isUntouched() {
+    public final boolean getIsUntouched() {
         return isUntouched;
     }
 
-    public final void setUntouched(boolean untouched) {
-        isUntouched = untouched;
+    public final void setIsUntouchedFalse() {
+        isUntouched = false;
     }
 
     public abstract boolean canMove(ChessBoard chessBoard, Position from, Position to);

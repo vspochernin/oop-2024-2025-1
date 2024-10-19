@@ -63,11 +63,13 @@ public final class ChessBoard {
             return false;
         }
 
-        if (!getChessPieceAtPosition(from).canMove(this, from, to)) {
+        ChessPiece chessPieceFrom = getChessPieceAtPosition(from);
+        if (!chessPieceFrom.canMove(this, from, to)) {
             return false;
         }
 
-        setChessPieceAtPosition(getChessPieceAtPosition(from), to);
+        chessPieceFrom.setIsUntouchedFalse();
+        setChessPieceAtPosition(chessPieceFrom, to);
         setChessPieceAtPosition(null, from);
         nowPlayerColor = nowPlayerColor.swap();
 
