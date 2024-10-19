@@ -59,7 +59,7 @@ public final class ChessBoard {
     }
 
     public boolean moveToPosition(Position from, Position to) {
-        if (!ChessUtils.basicMoveValidation(this, from, to)) {
+        if (ChessUtils.failBasicMoveValidation(this, from, to)) {
             return false;
         }
 

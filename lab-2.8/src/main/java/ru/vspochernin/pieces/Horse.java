@@ -18,7 +18,7 @@ public final class Horse extends ChessPiece {
 
     @Override
     public boolean canMove(ChessBoard board, Position from, Position to) {
-        if (!ChessUtils.basicMoveValidation(board, from, to)) {
+        if (ChessUtils.failBasicMoveValidation(board, from, to)) {
             return false;
         }
 
