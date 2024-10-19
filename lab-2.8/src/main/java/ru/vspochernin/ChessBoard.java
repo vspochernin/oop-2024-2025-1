@@ -54,12 +54,12 @@ public final class ChessBoard {
         board[6][7] = new Pawn(Color.BLACK);
     }
 
+    public Color getNowPlayerColor() {
+        return nowPlayerColor;
+    }
+
     public boolean moveToPosition(Position from, Position to) {
         if (!ChessUtils.basicMoveValidation(this, from, to)) {
-            return false;
-        }
-
-        if (!nowPlayerColor.equals(getPlayerColorAtPosition(from))) {
             return false;
         }
 

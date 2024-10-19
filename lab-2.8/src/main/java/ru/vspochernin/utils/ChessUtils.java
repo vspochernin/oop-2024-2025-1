@@ -1,6 +1,7 @@
 package ru.vspochernin.utils;
 
 import ru.vspochernin.ChessBoard;
+import ru.vspochernin.model.Color;
 import ru.vspochernin.model.Position;
 import ru.vspochernin.pieces.ChessPiece;
 
@@ -22,8 +23,13 @@ public final class ChessUtils {
         if (chessPieceFrom == null) {
             return false;
         }
+        Color chessPieceFromColor = chessPieceFrom.getColor();
 
-        if (chessPieceFrom.getColor().equals(chessBoard.getPlayerColorAtPosition(to))) {
+        if (chessPieceFromColor.equals(chessBoard.getPlayerColorAtPosition(to))) {
+            return false;
+        }
+
+        if (!chessPieceFromColor.equals(chessBoard.getNowPlayerColor())) {
             return false;
         }
 
