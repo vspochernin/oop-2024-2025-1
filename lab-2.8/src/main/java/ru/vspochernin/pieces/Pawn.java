@@ -12,29 +12,29 @@ public final class Pawn extends ChessPiece {
     }
 
     @Override
-    public boolean canMove(ChessBoard chessBoard, Position from, Position to) {
-        if (!ChessUtils.basicMoveValidation(chessBoard, from, to)) {
+    public boolean canMove(ChessBoard board, Position from, Position to) {
+        if (!ChessUtils.basicMoveValidation(board, from, to)) {
             return false;
         }
 
         if (getColor().equals(Color.WHITE)) {
             if (to.equals(from.relative(1, 0))
-                    && chessBoard.getChessPieceAtPosition(to) == null)
+                    && board.getChessPieceAtPosition(to) == null)
             {
                 return true;
             }
 
             if (to.equals(from.relative(2, 0))
                     && isUntouched()
-                    && chessBoard.getChessPieceAtPosition(from.relative(1, 0)) == null
-                    && chessBoard.getChessPieceAtPosition(to) == null)
+                    && board.getChessPieceAtPosition(from.relative(1, 0)) == null
+                    && board.getChessPieceAtPosition(to) == null)
             {
                 return true;
             }
 
             if ((to.equals(from.relative(1, 1)) || to.equals(from.relative(1, -1)))
-                    && chessBoard.getChessPieceAtPosition(to) != null
-                    && !chessBoard.getPlayerColorAtPosition(to).equals(chessBoard.getNowPlayerColor()))
+                    && board.getChessPieceAtPosition(to) != null
+                    && !board.getPlayerColorAtPosition(to).equals(board.getNowPlayerColor()))
             {
                 return true;
             }
@@ -42,22 +42,22 @@ public final class Pawn extends ChessPiece {
 
         if (getColor().equals(Color.BLACK)) {
             if (to.equals(from.relative(-1, 0))
-                    && chessBoard.getChessPieceAtPosition(to) == null)
+                    && board.getChessPieceAtPosition(to) == null)
             {
                 return true;
             }
 
             if (to.equals(from.relative(-2, 0))
                     && isUntouched()
-                    && chessBoard.getChessPieceAtPosition(from.relative(-1, 0)) == null
-                    && chessBoard.getChessPieceAtPosition(to) == null)
+                    && board.getChessPieceAtPosition(from.relative(-1, 0)) == null
+                    && board.getChessPieceAtPosition(to) == null)
             {
                 return true;
             }
 
             if ((to.equals(from.relative(-1, 1)) || to.equals(from.relative(-1, -1)))
-                    && chessBoard.getChessPieceAtPosition(to) != null
-                    && !chessBoard.getPlayerColorAtPosition(to).equals(chessBoard.getNowPlayerColor()))
+                    && board.getChessPieceAtPosition(to) != null
+                    && !board.getPlayerColorAtPosition(to).equals(board.getNowPlayerColor()))
             {
                 return true;
             }

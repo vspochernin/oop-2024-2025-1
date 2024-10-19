@@ -29,7 +29,7 @@ public abstract class ChessPiece {
         isUntouched = false;
     }
 
-    public abstract boolean canMove(ChessBoard chessBoard, Position from, Position to);
+    public abstract boolean canMove(ChessBoard board, Position from, Position to);
 
     public abstract String getSymbol();
 }

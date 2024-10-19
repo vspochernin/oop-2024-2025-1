@@ -10,7 +10,7 @@ public final class ChessUtils {
     private ChessUtils() {
     }
 
-    public static boolean basicMoveValidation(ChessBoard chessBoard, Position from, Position to) {
+    public static boolean basicMoveValidation(ChessBoard board, Position from, Position to) {
         if (from.isOutOfBounds() || to.isOutOfBounds()) {
             return false;
         }
@@ -19,17 +19,17 @@ public final class ChessUtils {
             return false;
         }
 
-        ChessPiece chessPieceFrom = chessBoard.getChessPieceAtPosition(from);
+        ChessPiece chessPieceFrom = board.getChessPieceAtPosition(from);
         if (chessPieceFrom == null) {
             return false;
         }
         Color chessPieceFromColor = chessPieceFrom.getColor();
 
-        if (chessPieceFromColor.equals(chessBoard.getPlayerColorAtPosition(to))) {
+        if (chessPieceFromColor.equals(board.getPlayerColorAtPosition(to))) {
             return false;
         }
 
-        if (!chessPieceFromColor.equals(chessBoard.getNowPlayerColor())) {
+        if (!chessPieceFromColor.equals(board.getNowPlayerColor())) {
             return false;
         }
 

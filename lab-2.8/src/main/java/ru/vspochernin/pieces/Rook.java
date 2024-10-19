@@ -11,7 +11,7 @@ public final class Rook extends ChessPiece {
     }
 
     @Override
-    public boolean canMove(ChessBoard chessBoard, Position from, Position to) {
+    public boolean canMove(ChessBoard board, Position from, Position to) {
         throw new UnsupportedOperationException("TODO: implement"); // TODO: implement.
     }
 
