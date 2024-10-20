@@ -35,4 +35,23 @@ public final class ChessUtils {
 
         return false;
     }
+
+    public static boolean failBishopMoveValidation(ChessBoard board, Position from, Position to) {
+        Position diff = to.diff(from);
+        if (Math.abs(diff.line()) != Math.abs(diff.column())) {
+            return true;
+        }
+
+        int lineStep = diff.line() > 0 ? 1 : -1;
+        int columnStep = diff.column() > 0 ? 1 : -1;
+
+        Position pos;
+        for (pos = from.relative(lineStep, columnStep); !pos.equals(to); pos = pos.relative(lineStep, columnStep)) {
+            if (board.getChessPieceAtPosition(pos) != null) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
