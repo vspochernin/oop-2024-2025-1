@@ -91,11 +91,96 @@ public final class ChessBoard {
         return true;
     }
 
+    public boolean castling0() {
+        if (ChessUtils.failCastling0Validation(this)) {
+            return false;
+        }
+
+        Position rookPositionFrom = nowPlayerColor.equals(Color.WHITE)
+                ? ChessUtils.CASTLING0_WHITE_ROOK_FROM
+                : ChessUtils.CASTLING0_BLACK_ROOK_FROM;
+        Position kingPositionFrom = nowPlayerColor.equals(Color.WHITE)
+                ? ChessUtils.CASTLING0_WHITE_KING_FROM
+                : ChessUtils.CASTLING0_BLACK_KING_FROM;
+        Position rookPositionTo = nowPlayerColor.equals(Color.WHITE)
+                ? ChessUtils.CASTLING0_WHITE_ROOK_TO
+                : ChessUtils.CASTLING0_BLACK_ROOK_TO;
+        Position kingPositionTo = nowPlayerColor.equals(Color.WHITE)
+                ? ChessUtils.CASTLING0_WHITE_KING_TO
+                : ChessUtils.CASTLING0_BLACK_KING_TO;
+
+        ChessBoard boardCopy = new ChessBoard(this);
+        boardCopy.doCastling(rookPositionFrom, kingPositionFrom, rookPositionTo, kingPositionTo);
+        if (boardCopy.isKingUnderAttackByColor(boardCopy.nowPlayerColor)) {
+            return false;
+        }
+
+        doCastling(rookPositionFrom, kingPositionFrom, rookPositionTo, kingPositionTo);
+
+        return true;
+    }
+
+    public boolean castling7() {
+        if (ChessUtils.failCastling7Validation(this)) {
+            return false;
+        }
+
+        Position rookPositionFrom = nowPlayerColor.equals(Color.WHITE)
+                ? ChessUtils.CASTLING7_WHITE_ROOK_FROM
+                : ChessUtils.CASTLING7_BLACK_ROOK_FROM;
+        Position kingPositionFrom = nowPlayerColor.equals(Color.WHITE)
+                ? ChessUtils.CASTLING7_WHITE_KING_FROM
+                : ChessUtils.CASTLING7_BLACK_KING_FROM;
+        Position rookPositionTo = nowPlayerColor.equals(Color.WHITE)
+                ? ChessUtils.CASTLING7_WHITE_ROOK_TO
+                : ChessUtils.CASTLING7_BLACK_ROOK_TO;
+        Position kingPositionTo = nowPlayerColor.equals(Color.WHITE)
+                ? ChessUtils.CASTLING7_WHITE_KING_TO
+                : ChessUtils.CASTLING7_BLACK_KING_TO;
+
+        ChessBoard boardCopy = new ChessBoard(this);
+        boardCopy.doCastling(rookPositionFrom, kingPositionFrom, rookPositionTo, kingPositionTo);
+        if (boardCopy.isKingUnderAttackByColor(boardCopy.nowPlayerColor)) {
+            return false;
+        }
+
+        doCastling(rookPositionFrom, kingPositionFrom, rookPositionTo, kingPositionTo);
+
+        return true;
+    }
+
     private void doMoveToPosition(Position from, Position to) {
         ChessPiece chessPieceFrom = getChessPieceAtPosition(from);
+
+        if (chessPieceFrom == null) {
+            throw new IllegalStateException("Illegal move");
+        }
+
         chessPieceFrom.setUntouchedFalse();
         setChessPieceAtPosition(chessPieceFrom, to);
         setChessPieceAtPosition(null, from);
+        nowPlayerColor = nowPlayerColor.swapColor();
+    }
+
+    private void doCastling(
+            Position rookPositionFrom,
+            Position kingPositionFrom,
+            Position rookPositionTo,
+            Position kingPositionTo)
+    {
+        ChessPiece rookChessPieceFrom = getChessPieceAtPosition(rookPositionFrom);
+        ChessPiece kingChessPieceFrom = getChessPieceAtPosition(kingPositionFrom);
+
+        if (rookChessPieceFrom == null || kingChessPieceFrom == null) {
+            throw new IllegalStateException("Illegal castling");
+        }
+
+        rookChessPieceFrom.setUntouchedFalse();
+        kingChessPieceFrom.setUntouchedFalse();
+        setChessPieceAtPosition(rookChessPieceFrom, rookPositionTo);
+        setChessPieceAtPosition(kingChessPieceFrom, kingPositionTo);
+        setChessPieceAtPosition(null, rookPositionFrom);
+        setChessPieceAtPosition(null, kingPositionFrom);
         nowPlayerColor = nowPlayerColor.swapColor();
     }
 
