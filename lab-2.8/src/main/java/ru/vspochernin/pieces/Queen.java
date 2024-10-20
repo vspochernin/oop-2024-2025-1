@@ -3,6 +3,7 @@ package ru.vspochernin.pieces;
 import ru.vspochernin.ChessBoard;
 import ru.vspochernin.model.Color;
 import ru.vspochernin.model.Position;
+import ru.vspochernin.utils.ChessUtils;
 
 public final class Queen extends ChessPiece {
 
@@ -12,7 +13,17 @@ public final class Queen extends ChessPiece {
 
     @Override
     public boolean canMove(ChessBoard board, Position from, Position to) {
-        throw new UnsupportedOperationException("TODO: implement"); // TODO: implement.
+        if (ChessUtils.failBasicMoveValidation(board, from, to)) {
+            return false;
+        }
+
+        if (ChessUtils.failBishopMoveValidation(board, from, to) &&
+                ChessUtils.failRookMoveValidation(board, from, to))
+        {
+            return false;
+        }
+
+        return true;
     }
 
     @Override
