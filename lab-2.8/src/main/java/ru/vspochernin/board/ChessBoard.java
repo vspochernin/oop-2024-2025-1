@@ -2,6 +2,8 @@ package ru.vspochernin.board;
 
 import java.util.Optional;
 
+import ru.vspochernin.exception.IllegalMoveException;
+import ru.vspochernin.exception.IllegalMoveReason;
 import ru.vspochernin.model.Color;
 import ru.vspochernin.model.Move;
 import ru.vspochernin.model.Position;
@@ -72,33 +74,23 @@ public final class ChessBoard {
         return nowPlayerColor;
     }
 
-    public boolean moveToPosition(Move move) {
+    public void moveToPosition(Move move) {
         Position from = move.from();
         Position to = move.to();
 
-        if (ChessUtils.failBasicMoveValidation(this, from, to)) {
-            return false;
-        }
-
-        if (!getChessPieceAtPosition(from).canMove(this, from, to)) {
-            return false;
-        }
+        getChessPieceAtPosition(from).validateMove(this, from, to);
 
         ChessBoard boardCopy = new ChessBoard(this);
         boardCopy.doMoveToPosition(from, to);
         if (boardCopy.isKingUnderAttackByColor(boardCopy.nowPlayerColor)) {
-            return false;
+            throw new IllegalMoveException(IllegalMoveReason.KING_UNDER_ATTACK);
         }
 
         doMoveToPosition(from, to);
-
-        return true;
     }
 
-    public boolean castling0() {
-        if (ChessUtils.failCastling0Validation(this)) {
-            return false;
-        }
+    public void castling0() {
+        ChessUtils.castling0Validation(this);
 
         Position rookPositionFrom = nowPlayerColor.equals(Color.WHITE)
                 ? ChessUtils.CASTLING0_WHITE_ROOK_FROM
@@ -116,18 +108,14 @@ public final class ChessBoard {
         ChessBoard boardCopy = new ChessBoard(this);
         boardCopy.doCastling(rookPositionFrom, kingPositionFrom, rookPositionTo, kingPositionTo);
         if (boardCopy.isKingUnderAttackByColor(boardCopy.nowPlayerColor)) {
-            return false;
+            throw new IllegalMoveException(IllegalMoveReason.KING_UNDER_ATTACK);
         }
 
         doCastling(rookPositionFrom, kingPositionFrom, rookPositionTo, kingPositionTo);
-
-        return true;
     }
 
-    public boolean castling7() {
-        if (ChessUtils.failCastling7Validation(this)) {
-            return false;
-        }
+    public void castling7() {
+        ChessUtils.castling7Validation(this);
 
         Position rookPositionFrom = nowPlayerColor.equals(Color.WHITE)
                 ? ChessUtils.CASTLING7_WHITE_ROOK_FROM
@@ -145,12 +133,10 @@ public final class ChessBoard {
         ChessBoard boardCopy = new ChessBoard(this);
         boardCopy.doCastling(rookPositionFrom, kingPositionFrom, rookPositionTo, kingPositionTo);
         if (boardCopy.isKingUnderAttackByColor(boardCopy.nowPlayerColor)) {
-            return false;
+            throw new IllegalMoveException(IllegalMoveReason.KING_UNDER_ATTACK);
         }
 
         doCastling(rookPositionFrom, kingPositionFrom, rookPositionTo, kingPositionTo);
-
-        return true;
     }
 
     private void doMoveToPosition(Position from, Position to) {
@@ -274,8 +260,11 @@ public final class ChessBoard {
                     continue;
                 }
 
-                if (attackerChessPiece.canMove(this, from, to)) {
+                try {
+                    attackerChessPiece.validateMove(this, from, to);
                     return true;
+                } catch (IllegalMoveException ignore) {
+                    // Пропускаем.
                 }
             }
         }

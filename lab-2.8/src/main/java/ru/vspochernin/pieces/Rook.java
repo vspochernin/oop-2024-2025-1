@@ -16,16 +16,9 @@ public final class Rook extends ChessPiece {
     }
 
     @Override
-    public boolean canMove(ChessBoard board, Position from, Position to) {
-        if (ChessUtils.failBasicMoveValidation(board, from, to)) {
-            return false;
-        }
-
-        if (ChessUtils.failRookMoveValidation(board, from, to)) {
-            return false;
-        }
-
-        return true;
+    public void validateMove(ChessBoard board, Position from, Position to) {
+        ChessUtils.basicMoveValidation(board, from, to);
+        ChessUtils.rookMoveValidation(board, from, to);
     }
 
     @Override

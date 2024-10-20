@@ -3,6 +3,8 @@ package ru.vspochernin.utils;
 import java.util.List;
 
 import ru.vspochernin.board.ChessBoard;
+import ru.vspochernin.exception.IllegalMoveException;
+import ru.vspochernin.exception.IllegalMoveReason;
 import ru.vspochernin.model.Color;
 import ru.vspochernin.model.Position;
 import ru.vspochernin.pieces.ChessPiece;
@@ -46,36 +48,34 @@ public final class ChessUtils {
     private ChessUtils() {
     }
 
-    public static boolean failBasicMoveValidation(ChessBoard board, Position from, Position to) {
+    public static void basicMoveValidation(ChessBoard board, Position from, Position to) {
         if (from.isOutOfBounds() || to.isOutOfBounds()) {
-            return true;
+            throw new IllegalMoveException(IllegalMoveReason.OUT_OF_BOUNDS);
         }
 
         if (from.equals(to)) {
-            return true;
+            throw new IllegalMoveException(IllegalMoveReason.FROM_EQUALS_TO);
         }
 
         ChessPiece chessPieceFrom = board.getChessPieceAtPosition(from);
         if (chessPieceFrom == null) {
-            return true;
+            throw new IllegalMoveException(IllegalMoveReason.CHESS_PIECE_FROM_IS_NULL);
         }
         Color chessPieceFromColor = chessPieceFrom.getColor();
 
         if (chessPieceFromColor.equals(board.getPlayerColorAtPosition(to))) {
-            return true;
+            throw new IllegalMoveException(IllegalMoveReason.EAT_YOU_CHESS_PIECE);
         }
 
         if (!chessPieceFromColor.equals(board.getNowPlayerColor())) {
-            return true;
+            throw new IllegalMoveException(IllegalMoveReason.NOT_YOUR_TURN);
         }
-
-        return false;
     }
 
-    public static boolean failBishopMoveValidation(ChessBoard board, Position from, Position to) {
+    public static void bishopMoveValidation(ChessBoard board, Position from, Position to) {
         Position diff = to.diff(from);
         if (Math.abs(diff.line()) != Math.abs(diff.column())) {
-            return true;
+            throw new IllegalMoveException(IllegalMoveReason.BISHOP_ILLEGAL_MOVE);
         }
 
         int lineStep = diff.line() > 0 ? 1 : -1;
@@ -84,17 +84,15 @@ public final class ChessUtils {
         Position pos;
         for (pos = from.relative(lineStep, columnStep); !pos.equals(to); pos = pos.relative(lineStep, columnStep)) {
             if (board.getChessPieceAtPosition(pos) != null) {
-                return true;
+                throw new IllegalMoveException(IllegalMoveReason.CHESS_PIECES_BETWEEN);
             }
         }
-
-        return false;
     }
 
-    public static boolean failRookMoveValidation(ChessBoard board, Position from, Position to) {
+    public static void rookMoveValidation(ChessBoard board, Position from, Position to) {
         Position diff = to.diff(from);
         if (Math.abs(diff.line()) > 0 == Math.abs(diff.column()) > 0) {
-            return true;
+            throw new IllegalMoveException(IllegalMoveReason.ROOK_ILLEGAL_MOVE);
         }
 
         int lineStep = diff.line() == 0 ? 0 : (diff.line() > 0 ? 1 : -1);
@@ -103,16 +101,14 @@ public final class ChessUtils {
         Position pos;
         for (pos = from.relative(lineStep, columnStep); !pos.equals(to); pos = pos.relative(lineStep, columnStep)) {
             if (board.getChessPieceAtPosition(pos) != null) {
-                return true;
+                throw new IllegalMoveException(IllegalMoveReason.CHESS_PIECES_BETWEEN);
             }
         }
-
-        return false;
     }
 
-    public static boolean failCastling0Validation(ChessBoard board) {
+    public static void castling0Validation(ChessBoard board) {
         if (board.getNowPlayerColor().equals(Color.WHITE)) {
-            return failCastlingValidation(
+            failCastlingValidation(
                     board,
                     CASTLING0_WHITE_ROOK_FROM,
                     CASTLING0_WHITE_KING_FROM,
@@ -120,19 +116,18 @@ public final class ChessUtils {
         }
 
         if (board.getNowPlayerColor().equals(Color.BLACK)) {
-            return failCastlingValidation(
+            failCastlingValidation(
                     board,
                     CASTLING0_BLACK_ROOK_FROM,
                     CASTLING0_BLACK_KING_FROM,
                     CASTLING0_BLACK_POSITIONS_BETWEEN);
         }
 
-        return false;
     }
 
-    public static boolean failCastling7Validation(ChessBoard board) {
+    public static void castling7Validation(ChessBoard board) {
         if (board.getNowPlayerColor().equals(Color.WHITE)) {
-            return failCastlingValidation(
+            failCastlingValidation(
                     board,
                     CASTLING7_WHITE_ROOK_FROM,
                     CASTLING7_WHITE_KING_FROM,
@@ -140,17 +135,15 @@ public final class ChessUtils {
         }
 
         if (board.getNowPlayerColor().equals(Color.BLACK)) {
-            return failCastlingValidation(
+            failCastlingValidation(
                     board,
                     CASTLING7_BLACK_ROOK_FROM,
                     CASTLING7_BLACK_KING_FROM,
                     CASTLING7_BLACK_POSITIONS_BETWEEN);
         }
-
-        return false;
     }
 
-    private static boolean failCastlingValidation(
+    private static void failCastlingValidation(
             ChessBoard board,
             Position rookPositionFrom,
             Position kingPositionFrom,
@@ -160,19 +153,17 @@ public final class ChessUtils {
         ChessPiece kingChessPieceFrom = board.getChessPieceAtPosition(kingPositionFrom);
 
         if (!(rookChessPieceFrom instanceof Rook) || !(kingChessPieceFrom instanceof King)) {
-            return true;
+            throw new IllegalMoveException(IllegalMoveReason.CASTLING_NO_ROOK_OR_KING);
         }
 
         if (!rookChessPieceFrom.isUntouched() || !kingChessPieceFrom.isUntouched()) {
-            return true;
+            throw new IllegalMoveException(IllegalMoveReason.CASTLING_TOUCHED);
         }
 
         for (Position positionBetween : positionsBetween) {
             if (board.getChessPieceAtPosition(positionBetween) != null) {
-                return true;
+                throw new IllegalMoveException(IllegalMoveReason.CHESS_PIECES_BETWEEN);
             }
         }
-
-        return false;
     }
 }

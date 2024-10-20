@@ -1,6 +1,8 @@
 package ru.vspochernin.pieces;
 
 import ru.vspochernin.board.ChessBoard;
+import ru.vspochernin.exception.IllegalMoveException;
+import ru.vspochernin.exception.IllegalMoveReason;
 import ru.vspochernin.model.Color;
 import ru.vspochernin.model.Position;
 import ru.vspochernin.utils.ChessUtils;
@@ -21,19 +23,22 @@ public final class Horse extends ChessPiece {
     }
 
     @Override
-    public boolean canMove(ChessBoard board, Position from, Position to) {
-        if (ChessUtils.failBasicMoveValidation(board, from, to)) {
-            return false;
-        }
+    public void validateMove(ChessBoard board, Position from, Position to) {
+        ChessUtils.basicMoveValidation(board, from, to);
 
-        return (to.equals(from.relative(+2, +1))
+        if ((to.equals(from.relative(+2, +1))
                 || to.equals(from.relative(+2, -1))
                 || to.equals(from.relative(-2, +1))
                 || to.equals(from.relative(-2, -1))
                 || to.equals(from.relative(+1, +2))
                 || to.equals(from.relative(+1, -2))
                 || to.equals(from.relative(-1, +2))
-                || to.equals(from.relative(-1, -2)));
+                || to.equals(from.relative(-1, -2))))
+        {
+            return;
+        }
+
+        throw new IllegalMoveException(IllegalMoveReason.HORSE_ILLEGAL_MOVE);
     }
 
     @Override

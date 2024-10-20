@@ -1,6 +1,8 @@
 package ru.vspochernin.pieces;
 
 import ru.vspochernin.board.ChessBoard;
+import ru.vspochernin.exception.IllegalMoveException;
+import ru.vspochernin.exception.IllegalMoveReason;
 import ru.vspochernin.model.Color;
 import ru.vspochernin.model.Position;
 import ru.vspochernin.utils.ChessUtils;
@@ -16,18 +18,30 @@ public final class Queen extends ChessPiece {
     }
 
     @Override
-    public boolean canMove(ChessBoard board, Position from, Position to) {
-        if (ChessUtils.failBasicMoveValidation(board, from, to)) {
-            return false;
+    public void validateMove(ChessBoard board, Position from, Position to) {
+        ChessUtils.basicMoveValidation(board, from, to);
+
+        try {
+            ChessUtils.bishopMoveValidation(board, from, to);
+            return; // Походили как слон.
+        } catch (IllegalMoveException e) {
+            // Попробовали пойти по диагонали, но между были фигуры.
+            if (e.getReason().equals(IllegalMoveReason.CHESS_PIECES_BETWEEN)) {
+                throw e;
+            }
         }
 
-        if (ChessUtils.failBishopMoveValidation(board, from, to) &&
-                ChessUtils.failRookMoveValidation(board, from, to))
-        {
-            return false;
+        try {
+            ChessUtils.rookMoveValidation(board, from, to);
+            return; // Походили как ладья.
+        } catch (IllegalMoveException e) {
+            // Попробовали пойти по вертикали или горизонтали, но между были фигуры.
+            if (e.getReason().equals(IllegalMoveReason.CHESS_PIECES_BETWEEN)) {
+                throw e;
+            }
         }
 
-        return true;
+        throw new IllegalMoveException(IllegalMoveReason.QUEEN_ILLEGAL_MOVE);
     }
 
     @Override

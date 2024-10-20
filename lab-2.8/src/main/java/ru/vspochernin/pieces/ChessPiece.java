@@ -34,7 +34,7 @@ public abstract class ChessPiece {
         isUntouched = false;
     }
 
-    public abstract boolean canMove(ChessBoard board, Position from, Position to);
+    public abstract void validateMove(ChessBoard board, Position from, Position to);
 
     public abstract String getSymbol();
 

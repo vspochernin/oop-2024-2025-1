@@ -16,16 +16,9 @@ public final class Bishop extends ChessPiece {
     }
 
     @Override
-    public boolean canMove(ChessBoard board, Position from, Position to) {
-        if (ChessUtils.failBasicMoveValidation(board, from, to)) {
-            return false;
-        }
-
-        if (ChessUtils.failBishopMoveValidation(board, from, to)) {
-            return false;
-        }
-
-        return true;
+    public void validateMove(ChessBoard board, Position from, Position to) {
+        ChessUtils.basicMoveValidation(board, from, to);
+        ChessUtils.bishopMoveValidation(board, from, to);
     }
 
     @Override

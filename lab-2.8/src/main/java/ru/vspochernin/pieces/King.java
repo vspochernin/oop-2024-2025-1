@@ -1,6 +1,8 @@
 package ru.vspochernin.pieces;
 
 import ru.vspochernin.board.ChessBoard;
+import ru.vspochernin.exception.IllegalMoveException;
+import ru.vspochernin.exception.IllegalMoveReason;
 import ru.vspochernin.model.Color;
 import ru.vspochernin.model.Position;
 import ru.vspochernin.utils.ChessUtils;
@@ -16,17 +18,13 @@ public final class King extends ChessPiece {
     }
 
     @Override
-    public boolean canMove(ChessBoard board, Position from, Position to) {
-        if (ChessUtils.failBasicMoveValidation(board, from, to)) {
-            return false;
-        }
+    public void validateMove(ChessBoard board, Position from, Position to) {
+        ChessUtils.basicMoveValidation(board, from, to);
 
         Position diff = to.diff(from);
         if (Math.abs(diff.line()) > 1 || Math.abs(diff.column()) > 1) {
-            return false;
+            throw new IllegalMoveException(IllegalMoveReason.KING_ILLEGAL_MOVE);
         }
-
-        return true;
     }
 
     @Override

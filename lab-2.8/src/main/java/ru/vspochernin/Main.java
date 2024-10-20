@@ -33,32 +33,23 @@ public class Main {
             } else {
                 try {
                     if (s.equals("castling0")) {
-                        if (board.castling0()) {
-                            System.out.println("Рокировка удалась");
-                            board.printBoard();
-                        } else {
-                            System.out.println("Рокировка не удалась");
-                        }
+                        board.castling0();
+                        System.out.println("Рокировка удалась");
+                        board.printBoard();
                     } else if (s.equals("castling7")) {
-                        if (board.castling7()) {
-                            System.out.println("Рокировка удалась");
-                            board.printBoard();
-                        } else {
-                            System.out.println("Рокировка не удалась");
-                        }
+                        board.castling7();
+                        System.out.println("Рокировка удалась");
+                        board.printBoard();
                     } else if (s.startsWith("move ")) {
                         Move move = MoveParser.parseMove(s.substring(5));
-                        if (board.moveToPosition(move)) {
-                            System.out.println("Успешно передвинулись");
-                            board.printBoard();
-                        } else {
-                            System.out.println("Передвижение не удалось");
-                        }
+                        board.moveToPosition(move);
+                        System.out.println("Ход удался");
+                        board.printBoard();
                     } else {
                         System.out.println("Некорректная команды");
                     }
                 } catch (Exception e) {
-                    System.out.printf("Возникла следующая проблема: %s%n", e.getMessage());
+                    System.out.printf("Возникла следующая проблема: %s, повторите ход:\n", e.getMessage());
                 }
             }
         }
