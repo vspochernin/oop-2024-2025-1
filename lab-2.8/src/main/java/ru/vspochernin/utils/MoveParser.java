@@ -9,12 +9,12 @@ import ru.vspochernin.model.Position;
 public class MoveParser {
 
     public static Move parseMove(String moveStr) {
-        String[] a = moveStr.split(" ");
+        String[] moveParts = moveStr.split(" ");
         try {
-            int lineFrom = Integer.parseInt(a[1]);
-            int columnFrom = Integer.parseInt(a[2]);
-            int lineTo = Integer.parseInt(a[3]);
-            int columnTo = Integer.parseInt(a[4]);
+            int lineFrom = Integer.parseInt(moveParts[0]);
+            int columnFrom = Integer.parseInt(moveParts[1]);
+            int lineTo = Integer.parseInt(moveParts[2]);
+            int columnTo = Integer.parseInt(moveParts[3]);
 
             Position from = new Position(lineFrom, columnFrom);
             Position to = new Position(lineTo, columnTo);
@@ -23,8 +23,8 @@ public class MoveParser {
         } catch (Exception ignored) {
         }
 
-        String fromStr = a[1];
-        String toStr = a[2];
+        String fromStr = moveParts[0];
+        String toStr = moveParts[1];
 
         Position from = new Position(parseLine(fromStr.charAt(1)), parseColumn(fromStr.charAt(0)));
         Position to = new Position(parseLine(toStr.charAt(1)), parseColumn(toStr.charAt(0)));

@@ -46,14 +46,16 @@ public class Main {
                         } else {
                             System.out.println("Рокировка не удалась");
                         }
-                    } else if (s.contains("move")) {
-                        Move move = MoveParser.parseMove(s);
+                    } else if (s.startsWith("move ")) {
+                        Move move = MoveParser.parseMove(s.substring(5));
                         if (board.moveToPosition(move)) {
                             System.out.println("Успешно передвинулись");
                             board.printBoard();
                         } else {
                             System.out.println("Передвижение не удалось");
                         }
+                    } else {
+                        System.out.println("Некорректная команды");
                     }
                 } catch (Exception e) {
                     System.out.printf("Возникла следующая проблема: %s%n", e.getMessage());
