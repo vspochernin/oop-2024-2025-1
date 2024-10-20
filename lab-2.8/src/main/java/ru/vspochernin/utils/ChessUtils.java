@@ -54,4 +54,23 @@ public final class ChessUtils {
 
         return false;
     }
+
+    public static boolean failRookMoveValidation(ChessBoard board, Position from, Position to) {
+        Position diff = to.diff(from);
+        if (diff.line() > 0 == diff.column() > 0) {
+            return true;
+        }
+
+        int lineStep = diff.line() == 0 ? 0 : (diff.line() > 0 ? 1 : -1);
+        int columnStep = diff.column() == 0 ? 0 : (diff.column() > 0 ? 1 : -1);
+
+        Position pos;
+        for (pos = from.relative(lineStep, columnStep); !pos.equals(to); pos = pos.relative(lineStep, columnStep)) {
+            if (board.getChessPieceAtPosition(pos) != null) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
