@@ -3,6 +3,7 @@ package ru.vspochernin;
 import java.util.Optional;
 
 import ru.vspochernin.model.Color;
+import ru.vspochernin.model.Move;
 import ru.vspochernin.model.Position;
 import ru.vspochernin.pieces.Bishop;
 import ru.vspochernin.pieces.ChessPiece;
@@ -71,7 +72,10 @@ public final class ChessBoard {
         return nowPlayerColor;
     }
 
-    public boolean moveToPosition(Position from, Position to) {
+    public boolean moveToPosition(Move move) {
+        Position from = move.from();
+        Position to = move.to();
+
         if (ChessUtils.failBasicMoveValidation(this, from, to)) {
             return false;
         }

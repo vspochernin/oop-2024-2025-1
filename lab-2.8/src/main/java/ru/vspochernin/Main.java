@@ -45,7 +45,7 @@ public class Main {
                 } else if (s.contains("move")) {
                     try {
                         Move move = MoveParser.parseMove(s);
-                        if (board.moveToPosition(move.from(), move.to())) {
+                        if (board.moveToPosition(move)) {
                             System.out.println("Успешно передвинулись");
                             board.printBoard();
                         } else {
