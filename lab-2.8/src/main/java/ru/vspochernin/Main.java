@@ -11,6 +11,7 @@ public class Main {
     public static void main(String[] args) {
         ChessBoard board = new ChessBoard();
         Scanner scanner = new Scanner(System.in);
+
         System.out.println("""
                 Чтобы проверить игру надо вводить команды:
                 'exit' - для выхода
@@ -20,6 +21,7 @@ public class Main {
                 Проверьте могут ли фигуры ходить друг сквозь друга, корректно ли съедают друг друга, можно ли поставить шах и сделать рокировку?""");
         System.out.println();
         board.printBoard();
+
         while (true) {
             String s = scanner.nextLine();
             if (s.equals("exit")) {
@@ -29,22 +31,22 @@ public class Main {
                 board = new ChessBoard();
                 board.printBoard();
             } else {
-                if (s.equals("castling0")) {
-                    if (board.castling0()) {
-                        System.out.println("Рокировка удалась");
-                        board.printBoard();
-                    } else {
-                        System.out.println("Рокировка не удалась");
-                    }
-                } else if (s.equals("castling7")) {
-                    if (board.castling7()) {
-                        System.out.println("Рокировка удалась");
-                        board.printBoard();
-                    } else {
-                        System.out.println("Рокировка не удалась");
-                    }
-                } else if (s.contains("move")) {
-                    try {
+                try {
+                    if (s.equals("castling0")) {
+                        if (board.castling0()) {
+                            System.out.println("Рокировка удалась");
+                            board.printBoard();
+                        } else {
+                            System.out.println("Рокировка не удалась");
+                        }
+                    } else if (s.equals("castling7")) {
+                        if (board.castling7()) {
+                            System.out.println("Рокировка удалась");
+                            board.printBoard();
+                        } else {
+                            System.out.println("Рокировка не удалась");
+                        }
+                    } else if (s.contains("move")) {
                         Move move = MoveParser.parseMove(s);
                         if (board.moveToPosition(move)) {
                             System.out.println("Успешно передвинулись");
@@ -52,10 +54,9 @@ public class Main {
                         } else {
                             System.out.println("Передвижение не удалось");
                         }
-                    } catch (Exception e) {
-                        System.out.println("Вы что-то ввели не так, попробуйте ещё раз");
                     }
-
+                } catch (Exception e) {
+                    System.out.printf("Возникла следующая проблема: %s%n", e.getMessage());
                 }
             }
         }

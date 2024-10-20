@@ -190,7 +190,6 @@ public final class ChessBoard {
 
     public void printBoard() {
         System.out.println("Turn " + nowPlayerColor);
-        System.out.println();
         System.out.println("Player 2(Black)");
         System.out.println();
         System.out.println("\t0\t1\t2\t3\t4\t5\t6\t7");
