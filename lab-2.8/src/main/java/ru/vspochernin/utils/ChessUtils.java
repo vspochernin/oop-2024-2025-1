@@ -2,7 +2,7 @@ package ru.vspochernin.utils;
 
 import java.util.List;
 
-import ru.vspochernin.ChessBoard;
+import ru.vspochernin.board.ChessBoard;
 import ru.vspochernin.model.Color;
 import ru.vspochernin.model.Position;
 import ru.vspochernin.pieces.ChessPiece;

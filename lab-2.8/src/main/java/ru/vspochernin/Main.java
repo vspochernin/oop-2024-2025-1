@@ -2,6 +2,7 @@ package ru.vspochernin;
 
 import java.util.Scanner;
 
+import ru.vspochernin.board.ChessBoard;
 import ru.vspochernin.model.Move;
 import ru.vspochernin.utils.MoveParser;
 

@@ -1,6 +1,6 @@
 package ru.vspochernin.pieces;
 
-import ru.vspochernin.ChessBoard;
+import ru.vspochernin.board.ChessBoard;
 import ru.vspochernin.model.Color;
 import ru.vspochernin.model.Position;
 import ru.vspochernin.utils.ChessUtils;

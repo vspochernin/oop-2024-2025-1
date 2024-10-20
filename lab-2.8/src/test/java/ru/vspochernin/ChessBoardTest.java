@@ -2,6 +2,7 @@ package ru.vspochernin;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ru.vspochernin.board.ChessBoard;
 import ru.vspochernin.utils.MoveParser;
 
 import static org.junit.jupiter.api.Assertions.*;

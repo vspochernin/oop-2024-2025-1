@@ -1,4 +1,4 @@
-package ru.vspochernin;
+package ru.vspochernin.board;
 
 import java.util.Optional;
 
