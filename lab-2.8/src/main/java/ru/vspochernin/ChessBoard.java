@@ -61,7 +61,7 @@ public final class ChessBoard {
     public ChessBoard(ChessBoard other) {
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
-                this.board[i][j] = other.board[i][j].copy();
+                this.board[i][j] = other.board[i][j] == null ? null : other.board[i][j].copy();
             }
         }
         this.nowPlayerColor = other.nowPlayerColor;
