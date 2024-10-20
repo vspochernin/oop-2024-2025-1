@@ -2,7 +2,8 @@ package ru.vspochernin;
 
 import java.util.Scanner;
 
-import ru.vspochernin.model.Position;
+import ru.vspochernin.model.Move;
+import ru.vspochernin.utils.MoveParser;
 
 public class Main {
 
@@ -42,13 +43,9 @@ public class Main {
                         System.out.println("Рокировка не удалась");
                     }
                 } else if (s.contains("move")) {
-                    String[] a = s.split(" ");
                     try {
-                        int line = Integer.parseInt(a[1]);
-                        int column = Integer.parseInt(a[2]);
-                        int toLine = Integer.parseInt(a[3]);
-                        int toColumn = Integer.parseInt(a[4]);
-                        if (board.moveToPosition(new Position(line, column), new Position(toLine, toColumn))) {
+                        Move move = MoveParser.parseMove(s);
+                        if (board.moveToPosition(move.from(), move.to())) {
                             System.out.println("Успешно передвинулись");
                             board.printBoard();
                         } else {

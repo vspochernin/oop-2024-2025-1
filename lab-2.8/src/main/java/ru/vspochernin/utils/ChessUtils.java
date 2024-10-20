@@ -93,7 +93,7 @@ public final class ChessUtils {
 
     public static boolean failRookMoveValidation(ChessBoard board, Position from, Position to) {
         Position diff = to.diff(from);
-        if (diff.line() > 0 == diff.column() > 0) {
+        if (Math.abs(diff.line()) > 0 == Math.abs(diff.column()) > 0) {
             return true;
         }
 
