@@ -230,29 +230,6 @@ public final class ChessBoard {
         board[position.line()][position.column()] = chessPiece;
     }
 
-    private boolean isUnderAttackByColor(Position to, Color attacker) {
-        for (int i = 0; i < ChessBoard.SIZE; i++) {
-            for (int j = 0; j < ChessBoard.SIZE; j++) {
-                Position from = new Position(i, j);
-                ChessPiece attackerChessPiece = getChessPieceAtPosition(from);
-                if (attackerChessPiece == null) {
-                    continue;
-                }
-
-                Color attackerChessPieceColor = attackerChessPiece.getColor();
-                if (!attackerChessPieceColor.equals(attacker)) {
-                    continue;
-                }
-
-                if (attackerChessPiece.canMove(this, from, to)) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
-
     private boolean isKingUnderAttackByColor(Color attacker) {
         Position vulnerableKingPosition = findKingByColor(attacker.swapColor());
         return isUnderAttackByColor(vulnerableKingPosition, attacker);
@@ -281,5 +258,28 @@ public final class ChessBoard {
         }
 
         throw new IllegalStateException("There can't be no king");
+    }
+
+    private boolean isUnderAttackByColor(Position to, Color attacker) {
+        for (int i = 0; i < ChessBoard.SIZE; i++) {
+            for (int j = 0; j < ChessBoard.SIZE; j++) {
+                Position from = new Position(i, j);
+                ChessPiece attackerChessPiece = getChessPieceAtPosition(from);
+                if (attackerChessPiece == null) {
+                    continue;
+                }
+
+                Color attackerChessPieceColor = attackerChessPiece.getColor();
+                if (!attackerChessPieceColor.equals(attacker)) {
+                    continue;
+                }
+
+                if (attackerChessPiece.canMove(this, from, to)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }
