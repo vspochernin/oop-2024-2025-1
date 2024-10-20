@@ -6,7 +6,7 @@ import ru.vspochernin.model.Position;
 
 public abstract class ChessPiece {
 
-    private final Color color;
+    protected final Color color;
     private boolean isUntouched = true;
 
     public ChessPiece(Color color) {

@@ -17,7 +17,7 @@ public final class Pawn extends ChessPiece {
             return false;
         }
 
-        if (getColor().equals(Color.WHITE)) {
+        if (color.equals(Color.WHITE)) {
             if (to.equals(from.relative(1, 0))
                     && board.getChessPieceAtPosition(to) == null)
             {
@@ -40,7 +40,7 @@ public final class Pawn extends ChessPiece {
             }
         }
 
-        if (getColor().equals(Color.BLACK)) {
+        if (color.equals(Color.BLACK)) {
             if (to.equals(from.relative(-1, 0))
                     && board.getChessPieceAtPosition(to) == null)
             {
