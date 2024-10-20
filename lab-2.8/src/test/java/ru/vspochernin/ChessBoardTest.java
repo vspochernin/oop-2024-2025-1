@@ -18,17 +18,17 @@ class ChessBoardTest {
 
     @Test
     public void testPawnInitialMove() {
-        assertTrue(board.moveToPosition(MoveParser.parseMove("move a2 a3")));
+        assertTrue(board.moveToPosition(MoveParser.parseMove("a2 a3")));
     }
 
     @Test
     public void testPawnInitialLongMove() {
-        assertTrue(board.moveToPosition(MoveParser.parseMove("move a2 a4")));
+        assertTrue(board.moveToPosition(MoveParser.parseMove("a2 a4")));
     }
 
     @Test
     public void testPawnIllegalMoves() {
-        assertFalse(board.moveToPosition(MoveParser.parseMove("move a2 a2")));
-        assertFalse(board.moveToPosition(MoveParser.parseMove("move a2 a5")));
+        assertFalse(board.moveToPosition(MoveParser.parseMove("a2 a2")));
+        assertFalse(board.moveToPosition(MoveParser.parseMove("a2 a5")));
     }
 }
