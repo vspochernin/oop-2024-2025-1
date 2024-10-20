@@ -11,6 +11,10 @@ public final class Pawn extends ChessPiece {
         super(color);
     }
 
+    public Pawn(Pawn other) {
+        super(other);
+    }
+
     @Override
     public boolean canMove(ChessBoard board, Position from, Position to) {
         if (ChessUtils.failBasicMoveValidation(board, from, to)) {
@@ -69,5 +73,10 @@ public final class Pawn extends ChessPiece {
     @Override
     public String getSymbol() {
         return "P";
+    }
+
+    @Override
+    public ChessPiece copy() {
+        return new Pawn(this);
     }
 }

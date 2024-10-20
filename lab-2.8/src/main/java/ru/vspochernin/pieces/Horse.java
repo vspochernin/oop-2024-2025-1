@@ -11,6 +11,10 @@ public final class Horse extends ChessPiece {
         super(color);
     }
 
+    public Horse(Horse other) {
+        super(other);
+    }
+
     @Override
     public String getSymbol() {
         return "H";
@@ -30,5 +34,10 @@ public final class Horse extends ChessPiece {
                 || to.equals(from.relative(+1, -2))
                 || to.equals(from.relative(-1, +2))
                 || to.equals(from.relative(-1, -2)));
+    }
+
+    @Override
+    public ChessPiece copy() {
+        return new Horse(this);
     }
 }

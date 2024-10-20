@@ -13,6 +13,11 @@ public abstract class ChessPiece {
         this.color = color;
     }
 
+    public ChessPiece(ChessPiece other) {
+        this.color = other.color;
+        this.isUntouched = other.isUntouched;
+    }
+
     public final Color getColor() {
         return color;
     }
@@ -32,4 +37,6 @@ public abstract class ChessPiece {
     public abstract boolean canMove(ChessBoard board, Position from, Position to);
 
     public abstract String getSymbol();
+
+    public abstract ChessPiece copy();
 }

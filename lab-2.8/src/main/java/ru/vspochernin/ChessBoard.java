@@ -15,43 +15,56 @@ import ru.vspochernin.utils.ChessUtils;
 
 public final class ChessBoard {
 
-    private final ChessPiece[][] board = new ChessPiece[8][8];
-    private Color nowPlayerColor = Color.WHITE;
+    public static final int SIZE = 8;
+
+    private final ChessPiece[][] board = new ChessPiece[SIZE][SIZE];
+    private Color nowPlayerColor;
 
     public ChessBoard() {
-        board[0][0] = new Rook(Color.WHITE);
-        board[0][1] = new Horse(Color.WHITE);
-        board[0][2] = new Bishop(Color.WHITE);
-        board[0][3] = new Queen(Color.WHITE);
-        board[0][4] = new King(Color.WHITE);
-        board[0][5] = new Bishop(Color.WHITE);
-        board[0][6] = new Horse(Color.WHITE);
-        board[0][7] = new Rook(Color.WHITE);
-        board[1][0] = new Pawn(Color.WHITE);
-        board[1][1] = new Pawn(Color.WHITE);
-        board[1][2] = new Pawn(Color.WHITE);
-        board[1][3] = new Pawn(Color.WHITE);
-        board[1][4] = new Pawn(Color.WHITE);
-        board[1][5] = new Pawn(Color.WHITE);
-        board[1][6] = new Pawn(Color.WHITE);
-        board[1][7] = new Pawn(Color.WHITE);
+        this.board[0][0] = new Rook(Color.WHITE);
+        this.board[0][1] = new Horse(Color.WHITE);
+        this.board[0][2] = new Bishop(Color.WHITE);
+        this.board[0][3] = new Queen(Color.WHITE);
+        this.board[0][4] = new King(Color.WHITE);
+        this.board[0][5] = new Bishop(Color.WHITE);
+        this.board[0][6] = new Horse(Color.WHITE);
+        this.board[0][7] = new Rook(Color.WHITE);
+        this.board[1][0] = new Pawn(Color.WHITE);
+        this.board[1][1] = new Pawn(Color.WHITE);
+        this.board[1][2] = new Pawn(Color.WHITE);
+        this.board[1][3] = new Pawn(Color.WHITE);
+        this.board[1][4] = new Pawn(Color.WHITE);
+        this.board[1][5] = new Pawn(Color.WHITE);
+        this.board[1][6] = new Pawn(Color.WHITE);
+        this.board[1][7] = new Pawn(Color.WHITE);
 
-        board[7][0] = new Rook(Color.BLACK);
-        board[7][1] = new Horse(Color.BLACK);
-        board[7][2] = new Bishop(Color.BLACK);
-        board[7][3] = new Queen(Color.BLACK);
-        board[7][4] = new King(Color.BLACK);
-        board[7][5] = new Bishop(Color.BLACK);
-        board[7][6] = new Horse(Color.BLACK);
-        board[7][7] = new Rook(Color.BLACK);
-        board[6][0] = new Pawn(Color.BLACK);
-        board[6][1] = new Pawn(Color.BLACK);
-        board[6][2] = new Pawn(Color.BLACK);
-        board[6][3] = new Pawn(Color.BLACK);
-        board[6][4] = new Pawn(Color.BLACK);
-        board[6][5] = new Pawn(Color.BLACK);
-        board[6][6] = new Pawn(Color.BLACK);
-        board[6][7] = new Pawn(Color.BLACK);
+        this.board[7][0] = new Rook(Color.BLACK);
+        this.board[7][1] = new Horse(Color.BLACK);
+        this.board[7][2] = new Bishop(Color.BLACK);
+        this.board[7][3] = new Queen(Color.BLACK);
+        this.board[7][4] = new King(Color.BLACK);
+        this.board[7][5] = new Bishop(Color.BLACK);
+        this.board[7][6] = new Horse(Color.BLACK);
+        this.board[7][7] = new Rook(Color.BLACK);
+        this.board[6][0] = new Pawn(Color.BLACK);
+        this.board[6][1] = new Pawn(Color.BLACK);
+        this.board[6][2] = new Pawn(Color.BLACK);
+        this.board[6][3] = new Pawn(Color.BLACK);
+        this.board[6][4] = new Pawn(Color.BLACK);
+        this.board[6][5] = new Pawn(Color.BLACK);
+        this.board[6][6] = new Pawn(Color.BLACK);
+        this.board[6][7] = new Pawn(Color.BLACK);
+
+        this.nowPlayerColor = Color.WHITE;
+    }
+
+    public ChessBoard(ChessBoard other) {
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                this.board[i][j] = other.board[i][j].copy();
+            }
+        }
+        this.nowPlayerColor = other.nowPlayerColor;
     }
 
     public Color getNowPlayerColor() {
@@ -63,17 +76,27 @@ public final class ChessBoard {
             return false;
         }
 
-        ChessPiece chessPieceFrom = getChessPieceAtPosition(from);
-        if (!chessPieceFrom.canMove(this, from, to)) {
+        if (!getChessPieceAtPosition(from).canMove(this, from, to)) {
             return false;
         }
 
+        ChessBoard boardCopy = new ChessBoard(this);
+        boardCopy.doMoveToPosition(from, to);
+        if (boardCopy.isKingUnderAttackByColor(boardCopy.nowPlayerColor)) {
+            return false;
+        }
+
+        doMoveToPosition(from, to);
+
+        return true;
+    }
+
+    private void doMoveToPosition(Position from, Position to) {
+        ChessPiece chessPieceFrom = getChessPieceAtPosition(from);
         chessPieceFrom.setUntouchedFalse();
         setChessPieceAtPosition(chessPieceFrom, to);
         setChessPieceAtPosition(null, from);
-        nowPlayerColor = nowPlayerColor.swap();
-
-        return true;
+        nowPlayerColor = nowPlayerColor.swapColor();
     }
 
     public void printBoard() {
@@ -117,5 +140,58 @@ public final class ChessBoard {
 
     private void setChessPieceAtPosition(ChessPiece chessPiece, Position position) {
         board[position.line()][position.column()] = chessPiece;
+    }
+
+    private boolean isUnderAttackByColor(Position to, Color attacker) {
+        for (int i = 0; i < ChessBoard.SIZE; i++) {
+            for (int j = 0; j < ChessBoard.SIZE; j++) {
+                Position from = new Position(i, j);
+                ChessPiece attackerChessPiece = getChessPieceAtPosition(from);
+                if (attackerChessPiece == null) {
+                    continue;
+                }
+
+                Color attackerChessPieceColor = attackerChessPiece.getColor();
+                if (!attackerChessPieceColor.equals(attacker)) {
+                    continue;
+                }
+
+                if (attackerChessPiece.canMove(this, from, to)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private boolean isKingUnderAttackByColor(Color attacker) {
+        Position vulnerableKingPosition = findKingByColor(attacker.swapColor());
+        return isUnderAttackByColor(vulnerableKingPosition, attacker);
+    }
+
+    private Position findKingByColor(Color findingKingColor) {
+        for (int i = 0; i < ChessBoard.SIZE; i++) {
+            for (int j = 0; j < ChessBoard.SIZE; j++) {
+                Position position = new Position(i, j);
+                ChessPiece chessPiece = getChessPieceAtPosition(position);
+
+                if (chessPiece == null) {
+                    continue;
+                }
+
+                if (!chessPiece.getColor().equals(findingKingColor)) {
+                    continue;
+                }
+
+                if (!(chessPiece instanceof King)) {
+                    continue;
+                }
+
+                return position;
+            }
+        }
+
+        throw new IllegalStateException("There can't be no king");
     }
 }

@@ -11,6 +11,10 @@ public final class Queen extends ChessPiece {
         super(color);
     }
 
+    public Queen(Queen other) {
+        super(other);
+    }
+
     @Override
     public boolean canMove(ChessBoard board, Position from, Position to) {
         if (ChessUtils.failBasicMoveValidation(board, from, to)) {
@@ -29,5 +33,10 @@ public final class Queen extends ChessPiece {
     @Override
     public String getSymbol() {
         return "Q";
+    }
+
+    @Override
+    public ChessPiece copy() {
+        return new Queen(this);
     }
 }

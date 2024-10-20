@@ -11,6 +11,10 @@ public final class Bishop extends ChessPiece {
         super(color);
     }
 
+    public Bishop(Bishop other) {
+        super(other);
+    }
+
     @Override
     public boolean canMove(ChessBoard board, Position from, Position to) {
         if (ChessUtils.failBasicMoveValidation(board, from, to)) {
@@ -27,5 +31,10 @@ public final class Bishop extends ChessPiece {
     @Override
     public String getSymbol() {
         return "B";
+    }
+
+    @Override
+    public ChessPiece copy() {
+        return new Bishop(this);
     }
 }

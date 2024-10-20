@@ -11,6 +11,10 @@ public final class Rook extends ChessPiece {
         super(color);
     }
 
+    public Rook(Rook other) {
+        super(other);
+    }
+
     @Override
     public boolean canMove(ChessBoard board, Position from, Position to) {
         if (ChessUtils.failBasicMoveValidation(board, from, to)) {
@@ -27,5 +31,10 @@ public final class Rook extends ChessPiece {
     @Override
     public String getSymbol() {
         return "R";
+    }
+
+    @Override
+    public ChessPiece copy() {
+        return new Rook(this);
     }
 }
