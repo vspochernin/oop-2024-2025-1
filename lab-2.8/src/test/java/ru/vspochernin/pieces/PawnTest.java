@@ -89,4 +89,17 @@ class PawnTest extends TestWithBoard {
                         "f4 e5",
                         "f5 e4"));
     }
+
+    @Test
+    public void pawnCrazyMoveFail() {
+        TestUtils.acceptMovesToTheBoardWithIllegalMoveReasonAtTheEnd(
+                board,
+                IllegalMoveReason.PAWN_ILLEGAL_MOVE,
+                List.of("e2 a5"));
+        TestUtils.acceptMovesToTheBoardWithIllegalMoveReasonAtTheEnd(
+                board,
+                IllegalMoveReason.PAWN_ILLEGAL_MOVE,
+                List.of("e2 e4",
+                        "e7 a5"));
+    }
 }
