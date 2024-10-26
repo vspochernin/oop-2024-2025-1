@@ -6,9 +6,6 @@ import ru.vspochernin.model.Position;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * @author pochernin-vla
- */
 class MoveParserTest {
 
     @Test

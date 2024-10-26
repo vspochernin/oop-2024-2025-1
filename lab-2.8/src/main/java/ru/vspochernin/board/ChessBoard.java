@@ -78,6 +78,7 @@ public final class ChessBoard {
         Position from = move.from();
         Position to = move.to();
 
+        ChessUtils.basicMoveValidation(this, from, to);
         getChessPieceAtPosition(from).validateMove(this, from, to);
 
         ChessBoard boardCopy = new ChessBoard(this);
@@ -182,7 +183,7 @@ public final class ChessBoard {
         System.out.println("-------------------------------------");
 
         for (int i = 7; i >= 0; i--) {
-            System.out.print(i + "|\t");
+            System.out.print((i + 1) + "|\t");
             for (int j = 0; j <= 7; j++) {
                 Position position = new Position(i, j);
                 ChessPiece chessPiece = getChessPieceAtPosition(position);
@@ -197,7 +198,7 @@ public final class ChessBoard {
         }
 
         System.out.println("-------------------------------------");
-        System.out.println("\t0\t1\t2\t3\t4\t5\t6\t7");
+        System.out.println("\tA\tB\tC\tD\tE\tF\tG\tH");
         System.out.println();
         System.out.println("Player 1(White)");
     }

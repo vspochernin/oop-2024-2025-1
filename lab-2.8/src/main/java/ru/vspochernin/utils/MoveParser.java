@@ -3,9 +3,6 @@ package ru.vspochernin.utils;
 import ru.vspochernin.model.Move;
 import ru.vspochernin.model.Position;
 
-/**
- * @author pochernin-vla
- */
 public class MoveParser {
 
     public static Move parseMove(String moveStr) {
