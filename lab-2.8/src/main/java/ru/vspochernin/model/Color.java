@@ -15,7 +15,7 @@ public enum Color {
         return value;
     }
 
-    public Color swapColor() {
+    public Color opposite() {
         return this.equals(WHITE) ? BLACK : WHITE;
     }
 

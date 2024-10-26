@@ -149,7 +149,7 @@ public final class ChessBoard {
         chessPieceFrom.setUntouchedFalse();
         setChessPieceAtPosition(chessPieceFrom, to);
         setChessPieceAtPosition(null, from);
-        nowPlayerColor = nowPlayerColor.swapColor();
+        nowPlayerColor = nowPlayerColor.opposite();
     }
 
     private void doCastlingAndSwapPlayer(
@@ -171,7 +171,7 @@ public final class ChessBoard {
         setChessPieceAtPosition(kingChessPieceFrom, kingPositionTo);
         setChessPieceAtPosition(null, rookPositionFrom);
         setChessPieceAtPosition(null, kingPositionFrom);
-        nowPlayerColor = nowPlayerColor.swapColor();
+        nowPlayerColor = nowPlayerColor.opposite();
     }
 
     public void printBoard() {
@@ -217,7 +217,7 @@ public final class ChessBoard {
     }
 
     private boolean isKingUnderAttackByColor(Color attacker) {
-        Position vulnerableKingPosition = findKingByColor(attacker.swapColor());
+        Position vulnerableKingPosition = findKingByColor(attacker.opposite());
         return isUnderAttackByColor(vulnerableKingPosition, attacker);
     }
 
@@ -255,8 +255,7 @@ public final class ChessBoard {
                     continue;
                 }
 
-                Color attackerChessPieceColor = attackerChessPiece.getColor();
-                if (!attackerChessPieceColor.equals(attacker)) {
+                if (!attackerChessPiece.getColor().equals(attacker)) {
                     continue;
                 }
 
@@ -264,7 +263,7 @@ public final class ChessBoard {
                     attackerChessPiece.validateMove(this, from, to);
                     return true;
                 } catch (IllegalMoveException ignore) {
-                    // Пропускаем.
+                    // Пропускаем исключение, мы просто пытаемся понять, можно ли так ходить.
                 }
             }
         }
