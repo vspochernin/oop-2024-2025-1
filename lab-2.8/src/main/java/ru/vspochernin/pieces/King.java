@@ -21,7 +21,7 @@ public final class King extends ChessPiece {
     public void validateMove(ChessBoard board, Position from, Position to) {
         ChessUtils.basicMoveValidation(board, from, to);
 
-        Position diff = to.diff(from);
+        Position diff = to.minus(from);
         if (Math.abs(diff.line()) > 1 || Math.abs(diff.column()) > 1) {
             throw new IllegalMoveException(IllegalMoveReason.KING_ILLEGAL_MOVE);
         }

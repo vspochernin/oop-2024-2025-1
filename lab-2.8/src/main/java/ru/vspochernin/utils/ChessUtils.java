@@ -73,7 +73,7 @@ public final class ChessUtils {
     }
 
     public static void bishopMoveValidation(ChessBoard board, Position from, Position to) {
-        Position diff = to.diff(from);
+        Position diff = to.minus(from);
         if (Math.abs(diff.line()) != Math.abs(diff.column())) {
             throw new IllegalMoveException(IllegalMoveReason.BISHOP_ILLEGAL_MOVE);
         }
@@ -90,7 +90,7 @@ public final class ChessUtils {
     }
 
     public static void rookMoveValidation(ChessBoard board, Position from, Position to) {
-        Position diff = to.diff(from);
+        Position diff = to.minus(from);
         if (Math.abs(diff.line()) > 0 == Math.abs(diff.column()) > 0) {
             throw new IllegalMoveException(IllegalMoveReason.ROOK_ILLEGAL_MOVE);
         }

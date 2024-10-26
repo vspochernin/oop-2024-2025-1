@@ -12,7 +12,7 @@ public record Position(int line, int column) {
         return new Position(line + lineDiff, column + columnDiff);
     }
 
-    public Position diff(Position other) {
+    public Position minus(Position other) {
         return new Position(line - other.line, column - other.column);
     }
 
