@@ -243,7 +243,7 @@ public final class ChessBoard {
             }
         }
 
-        throw new IllegalStateException("There can't be no king");
+        throw new IllegalStateException("Критическая ошибка: на доске не может не быть короля");
     }
 
     private boolean isUnderAttackByColor(Position to, Color attacker) {
