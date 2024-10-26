@@ -81,12 +81,12 @@ public final class ChessBoard {
         getChessPieceAtPosition(from).validateMove(this, from, to);
 
         ChessBoard boardCopy = new ChessBoard(this);
-        boardCopy.doMoveToPosition(from, to);
+        boardCopy.doMoveToPositionAndSwapPlayer(from, to);
         if (boardCopy.isKingUnderAttackByColor(boardCopy.nowPlayerColor)) {
             throw new IllegalMoveException(IllegalMoveReason.KING_UNDER_ATTACK);
         }
 
-        doMoveToPosition(from, to);
+        doMoveToPositionAndSwapPlayer(from, to);
     }
 
     public void castling0() {
@@ -106,12 +106,12 @@ public final class ChessBoard {
                 : ChessUtils.CASTLING0_BLACK_KING_TO;
 
         ChessBoard boardCopy = new ChessBoard(this);
-        boardCopy.doCastling(rookPositionFrom, kingPositionFrom, rookPositionTo, kingPositionTo);
+        boardCopy.doCastlingAndSwapPlayer(rookPositionFrom, kingPositionFrom, rookPositionTo, kingPositionTo);
         if (boardCopy.isKingUnderAttackByColor(boardCopy.nowPlayerColor)) {
             throw new IllegalMoveException(IllegalMoveReason.KING_UNDER_ATTACK);
         }
 
-        doCastling(rookPositionFrom, kingPositionFrom, rookPositionTo, kingPositionTo);
+        doCastlingAndSwapPlayer(rookPositionFrom, kingPositionFrom, rookPositionTo, kingPositionTo);
     }
 
     public void castling7() {
@@ -131,15 +131,15 @@ public final class ChessBoard {
                 : ChessUtils.CASTLING7_BLACK_KING_TO;
 
         ChessBoard boardCopy = new ChessBoard(this);
-        boardCopy.doCastling(rookPositionFrom, kingPositionFrom, rookPositionTo, kingPositionTo);
+        boardCopy.doCastlingAndSwapPlayer(rookPositionFrom, kingPositionFrom, rookPositionTo, kingPositionTo);
         if (boardCopy.isKingUnderAttackByColor(boardCopy.nowPlayerColor)) {
             throw new IllegalMoveException(IllegalMoveReason.KING_UNDER_ATTACK);
         }
 
-        doCastling(rookPositionFrom, kingPositionFrom, rookPositionTo, kingPositionTo);
+        doCastlingAndSwapPlayer(rookPositionFrom, kingPositionFrom, rookPositionTo, kingPositionTo);
     }
 
-    private void doMoveToPosition(Position from, Position to) {
+    private void doMoveToPositionAndSwapPlayer(Position from, Position to) {
         ChessPiece chessPieceFrom = getChessPieceAtPosition(from);
 
         if (chessPieceFrom == null) {
@@ -152,7 +152,7 @@ public final class ChessBoard {
         nowPlayerColor = nowPlayerColor.swapColor();
     }
 
-    private void doCastling(
+    private void doCastlingAndSwapPlayer(
             Position rookPositionFrom,
             Position kingPositionFrom,
             Position rookPositionTo,
