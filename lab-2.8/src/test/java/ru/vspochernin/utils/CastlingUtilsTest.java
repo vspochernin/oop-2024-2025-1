@@ -61,7 +61,6 @@ class CastlingUtilsTest extends TestWithBoard {
 
         illegalMoveException = assertThrows(IllegalMoveException.class, () -> board.castling0());
         assertEquals(IllegalMoveReason.CASTLING_NO_ROOK_OR_KING, illegalMoveException.getReason());
-        board.printBoard();
     }
 
     @Test
@@ -156,6 +155,131 @@ class CastlingUtilsTest extends TestWithBoard {
         assertDoesNotThrow(() -> board.moveToPosition(Move.of("h2 h3"))); // Передаем ход черным.
 
         illegalMoveException = assertThrows(IllegalMoveException.class, () -> board.castling0());
+        assertEquals(IllegalMoveReason.CHESS_PIECES_BETWEEN, illegalMoveException.getReason());
+    }
+
+    // -------------------------------------------
+
+    @Test
+    public void successfulCastling7() {
+        TestUtils.acceptMovesToTheBoardWithoutExceptions(
+                board,
+                List.of("g1 h3",
+                        "g8 h6",
+                        "e2 e3",
+                        "e7 e6",
+                        "f1 e2",
+                        "f8 e7"));
+
+        assertDoesNotThrow(() -> board.castling7());
+        assertDoesNotThrow(() -> board.castling7());
+    }
+
+    @Test
+    public void castling7NoRookFail() {
+        TestUtils.acceptMovesToTheBoardWithoutExceptions(
+                board,
+                List.of("g1 h3",
+                        "g8 h6",
+                        "e2 e3",
+                        "e7 e6",
+                        "f1 e2",
+                        "f8 e7",
+                        "h1 g1",
+                        "h8 g8"));
+
+        IllegalMoveException illegalMoveException =
+                assertThrows(IllegalMoveException.class, () -> board.castling7());
+        assertEquals(IllegalMoveReason.CASTLING_NO_ROOK_OR_KING, illegalMoveException.getReason());
+
+        assertDoesNotThrow(() -> board.moveToPosition(Move.of("a2 a3"))); // Передаем ход черным.
+
+        illegalMoveException = assertThrows(IllegalMoveException.class, () -> board.castling7());
+        assertEquals(IllegalMoveReason.CASTLING_NO_ROOK_OR_KING, illegalMoveException.getReason());
+    }
+
+    @Test
+    public void castling7NoKingFail() {
+        TestUtils.acceptMovesToTheBoardWithoutExceptions(
+                board,
+                List.of("g1 h3",
+                        "g8 h6",
+                        "e2 e3",
+                        "e7 e6",
+                        "f1 e2",
+                        "f8 e7",
+                        "e1 f1",
+                        "e8 f8"));
+
+        IllegalMoveException illegalMoveException =
+                assertThrows(IllegalMoveException.class, () -> board.castling7());
+        assertEquals(IllegalMoveReason.CASTLING_NO_ROOK_OR_KING, illegalMoveException.getReason());
+
+        assertDoesNotThrow(() -> board.moveToPosition(Move.of("a2 a3"))); // Передаем ход черным.
+
+        illegalMoveException = assertThrows(IllegalMoveException.class, () -> board.castling7());
+        assertEquals(IllegalMoveReason.CASTLING_NO_ROOK_OR_KING, illegalMoveException.getReason());
+    }
+
+    @Test
+    public void castling7RookTouchedFail() {
+        TestUtils.acceptMovesToTheBoardWithoutExceptions(
+                board,
+                List.of("g1 h3",
+                        "g8 h6",
+                        "e2 e3",
+                        "e7 e6",
+                        "f1 e2",
+                        "f8 e7",
+                        "h1 g1",
+                        "h8 g8",
+                        "g1 h1",
+                        "g8 h8"));
+
+        IllegalMoveException illegalMoveException =
+                assertThrows(IllegalMoveException.class, () -> board.castling7());
+        assertEquals(IllegalMoveReason.CASTLING_TOUCHED, illegalMoveException.getReason());
+
+        assertDoesNotThrow(() -> board.moveToPosition(Move.of("a2 a3"))); // Передаем ход черным.
+
+        illegalMoveException = assertThrows(IllegalMoveException.class, () -> board.castling7());
+        assertEquals(IllegalMoveReason.CASTLING_TOUCHED, illegalMoveException.getReason());
+    }
+
+    @Test
+    public void castling7KingTouchedFail() {
+        TestUtils.acceptMovesToTheBoardWithoutExceptions(
+                board,
+                List.of("g1 h3",
+                        "g8 h6",
+                        "e2 e3",
+                        "e7 e6",
+                        "f1 e2",
+                        "f8 e7",
+                        "e1 f1",
+                        "e8 f8",
+                        "f1 e1",
+                        "f8 e8"));
+
+        IllegalMoveException illegalMoveException =
+                assertThrows(IllegalMoveException.class, () -> board.castling7());
+        assertEquals(IllegalMoveReason.CASTLING_TOUCHED, illegalMoveException.getReason());
+
+        assertDoesNotThrow(() -> board.moveToPosition(Move.of("a2 a3"))); // Передаем ход черным.
+
+        illegalMoveException = assertThrows(IllegalMoveException.class, () -> board.castling7());
+        assertEquals(IllegalMoveReason.CASTLING_TOUCHED, illegalMoveException.getReason());
+    }
+
+    @Test
+    public void castling7ChessPiecesBetweenFail() {
+        IllegalMoveException illegalMoveException =
+                assertThrows(IllegalMoveException.class, () -> board.castling7());
+        assertEquals(IllegalMoveReason.CHESS_PIECES_BETWEEN, illegalMoveException.getReason());
+
+        assertDoesNotThrow(() -> board.moveToPosition(Move.of("a2 a3"))); // Передаем ход черным.
+
+        illegalMoveException = assertThrows(IllegalMoveException.class, () -> board.castling7());
         assertEquals(IllegalMoveReason.CHESS_PIECES_BETWEEN, illegalMoveException.getReason());
     }
 }
