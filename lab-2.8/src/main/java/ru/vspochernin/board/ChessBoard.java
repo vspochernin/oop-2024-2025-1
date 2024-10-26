@@ -86,7 +86,7 @@ public final class ChessBoard {
         Color chessPieceFromColor = chessPieceFrom.getColor();
 
         if (chessPieceFromColor.equals(board.getPlayerColorAtPosition(to))) {
-            throw new IllegalMoveException(IllegalMoveReason.EAT_YOU_CHESS_PIECE);
+            throw new IllegalMoveException(IllegalMoveReason.EAT_YOUR_CHESS_PIECE);
         }
 
         if (!chessPieceFromColor.equals(board.getNowPlayerColor())) {

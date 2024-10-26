@@ -2,20 +2,12 @@ package ru.vspochernin.pieces;
 
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.vspochernin.board.ChessBoard;
+import ru.vspochernin.TestWithBoard;
 import ru.vspochernin.exception.IllegalMoveReason;
 import ru.vspochernin.utils.TestUtils;
 
-class PawnTest {
-
-    private ChessBoard board;
-
-    @BeforeEach
-    public void setUp() {
-        board = new ChessBoard();
-    }
+class PawnTest extends TestWithBoard {
 
     @Test
     public void testWhitePawnInitialShortMove() {
@@ -29,7 +21,6 @@ class PawnTest {
 
     @Test
     public void testWhitePawnInitialIllegalMoves() {
-
         TestUtils.acceptMovesToTheBoardWithIllegalMoveReasonAtTheEnd(
                 board,
                 IllegalMoveReason.FROM_EQUALS_TO,

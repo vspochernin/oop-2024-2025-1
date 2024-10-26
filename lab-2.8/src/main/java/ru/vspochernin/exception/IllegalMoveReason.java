@@ -5,7 +5,7 @@ public enum IllegalMoveReason {
     OUT_OF_BOUNDS("Выход за границы доски"),
     FROM_EQUALS_TO("Начало и конец хода совпадают"),
     CHESS_PIECE_FROM_IS_NULL("Фигура для хода отсутствует"),
-    EAT_YOU_CHESS_PIECE("Попытка съесть свою фигуру"),
+    EAT_YOUR_CHESS_PIECE("Попытка съесть свою фигуру"),
     NOT_YOUR_TURN("Сейчас не ваш ход"),
     BISHOP_ILLEGAL_MOVE("Слон так не ходит"),
     CHESS_PIECES_BETWEEN("На пути хода есть фигуры"),
