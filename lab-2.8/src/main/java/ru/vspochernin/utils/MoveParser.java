@@ -9,27 +9,43 @@ import ru.vspochernin.model.Position;
 public class MoveParser {
 
     public static Move parseMove(String moveStr) {
-        String[] moveParts = moveStr.split(" ");
         try {
-            int lineFrom = Integer.parseInt(moveParts[0]);
-            int columnFrom = Integer.parseInt(moveParts[1]);
-            int lineTo = Integer.parseInt(moveParts[2]);
-            int columnTo = Integer.parseInt(moveParts[3]);
+            String[] moveParts = moveStr.split(" ");
+            Position from;
+            Position to;
 
-            Position from = new Position(lineFrom, columnFrom);
-            Position to = new Position(lineTo, columnTo);
+            // Пытаемся обработать строку вида "1 4 3 4".
+            if (moveParts.length == 4) {
+                int lineFrom = Integer.parseInt(moveParts[0]);
+                int columnFrom = Integer.parseInt(moveParts[1]);
+                int lineTo = Integer.parseInt(moveParts[2]);
+                int columnTo = Integer.parseInt(moveParts[3]);
 
-            return new Move(from, to);
-        } catch (Exception ignored) {
+                from = new Position(lineFrom, columnFrom);
+                to = new Position(lineTo, columnTo);
+
+                return new Move(from, to);
+            }
+
+            // Пытаемся обработать строку вида "e2 e4".
+            if (moveParts.length == 2) {
+                String fromInNotation = moveParts[0];
+                String toInNotation = moveParts[1];
+
+                if (fromInNotation.length() != 2 || toInNotation.length() != 2) {
+                    throw new IllegalArgumentException();
+                }
+
+                from = new Position(parseLine(fromInNotation.charAt(1)), parseColumn(fromInNotation.charAt(0)));
+                to = new Position(parseLine(toInNotation.charAt(1)), parseColumn(toInNotation.charAt(0)));
+
+                return new Move(from, to);
+            }
+        } catch (Exception e) {
+            // Пропускаем, выкинем дальше.
         }
 
-        String fromStr = moveParts[0];
-        String toStr = moveParts[1];
-
-        Position from = new Position(parseLine(fromStr.charAt(1)), parseColumn(fromStr.charAt(0)));
-        Position to = new Position(parseLine(toStr.charAt(1)), parseColumn(toStr.charAt(0)));
-
-        return new Move(from, to);
+        throw new IllegalArgumentException("Некорректно задан ход");
     }
 
     private static int parseLine(char lineInNotation) {
@@ -46,7 +62,7 @@ public class MoveParser {
             case 'f' -> 5;
             case 'g' -> 6;
             case 'h' -> 7;
-            default -> throw new IllegalStateException("Unexpected value: " + columnInNotation);
+            default -> throw new IllegalStateException();
         };
     }
 }
