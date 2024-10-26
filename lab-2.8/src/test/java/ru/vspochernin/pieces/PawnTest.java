@@ -95,7 +95,7 @@ class PawnTest extends TestWithBoard {
         TestUtils.acceptMovesToTheBoardWithIllegalMoveReasonAtTheEnd(
                 board,
                 IllegalMoveReason.PAWN_ILLEGAL_MOVE,
-                List.of("e2, a5"));
+                List.of("e2 a5"));
         TestUtils.acceptMovesToTheBoardWithIllegalMoveReasonAtTheEnd(
                 board,
                 IllegalMoveReason.PAWN_ILLEGAL_MOVE,
