@@ -5,7 +5,6 @@ import java.util.Scanner;
 import ru.vspochernin.board.ChessBoard;
 import ru.vspochernin.model.Command;
 import ru.vspochernin.model.Move;
-import ru.vspochernin.utils.MoveParser;
 
 public class Main {
 
@@ -37,7 +36,7 @@ public class Main {
                         board.printBoard();
                     }
                     case MOVE -> {
-                        Move move = MoveParser.parseMove(commandStr.substring(5));
+                        Move move = Move.of(commandStr.substring(5));
                         board.moveToPosition(move);
                         System.out.println("Ход удался");
                         board.printBoard();
