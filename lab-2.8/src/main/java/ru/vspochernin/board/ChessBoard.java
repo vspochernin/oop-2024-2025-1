@@ -14,7 +14,7 @@ import ru.vspochernin.pieces.King;
 import ru.vspochernin.pieces.Pawn;
 import ru.vspochernin.pieces.Queen;
 import ru.vspochernin.pieces.Rook;
-import ru.vspochernin.utils.ChessUtils;
+import ru.vspochernin.utils.CastlingUtils;
 
 public final class ChessBoard {
 
@@ -70,6 +70,30 @@ public final class ChessBoard {
         this.nowPlayerColor = other.nowPlayerColor;
     }
 
+    public static void basicMoveValidation(ChessBoard board, Position from, Position to) {
+        if (from.isOutOfBounds() || to.isOutOfBounds()) {
+            throw new IllegalMoveException(IllegalMoveReason.OUT_OF_BOUNDS);
+        }
+
+        if (from.equals(to)) {
+            throw new IllegalMoveException(IllegalMoveReason.FROM_EQUALS_TO);
+        }
+
+        ChessPiece chessPieceFrom = board.getChessPieceAtPosition(from);
+        if (chessPieceFrom == null) {
+            throw new IllegalMoveException(IllegalMoveReason.CHESS_PIECE_FROM_IS_NULL);
+        }
+        Color chessPieceFromColor = chessPieceFrom.getColor();
+
+        if (chessPieceFromColor.equals(board.getPlayerColorAtPosition(to))) {
+            throw new IllegalMoveException(IllegalMoveReason.EAT_YOU_CHESS_PIECE);
+        }
+
+        if (!chessPieceFromColor.equals(board.getNowPlayerColor())) {
+            throw new IllegalMoveException(IllegalMoveReason.NOT_YOUR_TURN);
+        }
+    }
+
     public Color getNowPlayerColor() {
         return nowPlayerColor;
     }
@@ -78,7 +102,7 @@ public final class ChessBoard {
         Position from = move.from();
         Position to = move.to();
 
-        ChessUtils.basicMoveValidation(this, from, to);
+        basicMoveValidation(this, from, to);
         getChessPieceAtPosition(from).validateMove(this, from, to);
 
         ChessBoard boardCopy = new ChessBoard(this);
@@ -91,20 +115,20 @@ public final class ChessBoard {
     }
 
     public void castling0() {
-        ChessUtils.castling0Validation(this);
+        CastlingUtils.castling0Validation(this);
 
         Position rookPositionFrom = nowPlayerColor.equals(Color.WHITE)
-                ? ChessUtils.CASTLING0_WHITE_ROOK_FROM
-                : ChessUtils.CASTLING0_BLACK_ROOK_FROM;
+                ? CastlingUtils.CASTLING0_WHITE_ROOK_FROM
+                : CastlingUtils.CASTLING0_BLACK_ROOK_FROM;
         Position kingPositionFrom = nowPlayerColor.equals(Color.WHITE)
-                ? ChessUtils.CASTLING0_WHITE_KING_FROM
-                : ChessUtils.CASTLING0_BLACK_KING_FROM;
+                ? CastlingUtils.CASTLING0_WHITE_KING_FROM
+                : CastlingUtils.CASTLING0_BLACK_KING_FROM;
         Position rookPositionTo = nowPlayerColor.equals(Color.WHITE)
-                ? ChessUtils.CASTLING0_WHITE_ROOK_TO
-                : ChessUtils.CASTLING0_BLACK_ROOK_TO;
+                ? CastlingUtils.CASTLING0_WHITE_ROOK_TO
+                : CastlingUtils.CASTLING0_BLACK_ROOK_TO;
         Position kingPositionTo = nowPlayerColor.equals(Color.WHITE)
-                ? ChessUtils.CASTLING0_WHITE_KING_TO
-                : ChessUtils.CASTLING0_BLACK_KING_TO;
+                ? CastlingUtils.CASTLING0_WHITE_KING_TO
+                : CastlingUtils.CASTLING0_BLACK_KING_TO;
 
         ChessBoard boardCopy = new ChessBoard(this);
         boardCopy.doCastlingAndSwapPlayer(rookPositionFrom, kingPositionFrom, rookPositionTo, kingPositionTo);
@@ -116,20 +140,20 @@ public final class ChessBoard {
     }
 
     public void castling7() {
-        ChessUtils.castling7Validation(this);
+        CastlingUtils.castling7Validation(this);
 
         Position rookPositionFrom = nowPlayerColor.equals(Color.WHITE)
-                ? ChessUtils.CASTLING7_WHITE_ROOK_FROM
-                : ChessUtils.CASTLING7_BLACK_ROOK_FROM;
+                ? CastlingUtils.CASTLING7_WHITE_ROOK_FROM
+                : CastlingUtils.CASTLING7_BLACK_ROOK_FROM;
         Position kingPositionFrom = nowPlayerColor.equals(Color.WHITE)
-                ? ChessUtils.CASTLING7_WHITE_KING_FROM
-                : ChessUtils.CASTLING7_BLACK_KING_FROM;
+                ? CastlingUtils.CASTLING7_WHITE_KING_FROM
+                : CastlingUtils.CASTLING7_BLACK_KING_FROM;
         Position rookPositionTo = nowPlayerColor.equals(Color.WHITE)
-                ? ChessUtils.CASTLING7_WHITE_ROOK_TO
-                : ChessUtils.CASTLING7_BLACK_ROOK_TO;
+                ? CastlingUtils.CASTLING7_WHITE_ROOK_TO
+                : CastlingUtils.CASTLING7_BLACK_ROOK_TO;
         Position kingPositionTo = nowPlayerColor.equals(Color.WHITE)
-                ? ChessUtils.CASTLING7_WHITE_KING_TO
-                : ChessUtils.CASTLING7_BLACK_KING_TO;
+                ? CastlingUtils.CASTLING7_WHITE_KING_TO
+                : CastlingUtils.CASTLING7_BLACK_KING_TO;
 
         ChessBoard boardCopy = new ChessBoard(this);
         boardCopy.doCastlingAndSwapPlayer(rookPositionFrom, kingPositionFrom, rookPositionTo, kingPositionTo);

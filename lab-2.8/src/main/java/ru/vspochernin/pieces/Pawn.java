@@ -5,7 +5,6 @@ import ru.vspochernin.exception.IllegalMoveException;
 import ru.vspochernin.exception.IllegalMoveReason;
 import ru.vspochernin.model.Color;
 import ru.vspochernin.model.Position;
-import ru.vspochernin.utils.ChessUtils;
 
 public final class Pawn extends ChessPiece {
 
@@ -19,7 +18,7 @@ public final class Pawn extends ChessPiece {
 
     @Override
     public void validateMove(ChessBoard board, Position from, Position to) {
-        ChessUtils.basicMoveValidation(board, from, to);
+        ChessBoard.basicMoveValidation(board, from, to);
 
         if (color.equals(Color.WHITE)) {
             if (to.equals(from.relative(1, 0))

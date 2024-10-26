@@ -5,6 +5,9 @@ import ru.vspochernin.model.Position;
 
 public class MoveParser {
 
+    private MoveParser() {
+    }
+
     public static Move parseMove(String moveStr) {
         try {
             String[] moveParts = moveStr.split(" ");

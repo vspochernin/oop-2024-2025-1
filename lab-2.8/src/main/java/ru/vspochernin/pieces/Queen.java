@@ -5,7 +5,6 @@ import ru.vspochernin.exception.IllegalMoveException;
 import ru.vspochernin.exception.IllegalMoveReason;
 import ru.vspochernin.model.Color;
 import ru.vspochernin.model.Position;
-import ru.vspochernin.utils.ChessUtils;
 
 public final class Queen extends ChessPiece {
 
@@ -19,10 +18,10 @@ public final class Queen extends ChessPiece {
 
     @Override
     public void validateMove(ChessBoard board, Position from, Position to) {
-        ChessUtils.basicMoveValidation(board, from, to);
+        ChessBoard.basicMoveValidation(board, from, to);
 
         try {
-            ChessUtils.bishopMoveValidation(board, from, to);
+            Bishop.bishopMoveValidation(board, from, to);
             return; // Походили как слон.
         } catch (IllegalMoveException e) {
             // Попробовали пойти по диагонали, но между были фигуры.
@@ -32,7 +31,7 @@ public final class Queen extends ChessPiece {
         }
 
         try {
-            ChessUtils.rookMoveValidation(board, from, to);
+            Rook.rookMoveValidation(board, from, to);
             return; // Походили как ладья.
         } catch (IllegalMoveException e) {
             // Попробовали пойти по вертикали или горизонтали, но между были фигуры.
