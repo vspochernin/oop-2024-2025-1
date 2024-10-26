@@ -143,7 +143,7 @@ public final class ChessBoard {
         ChessPiece chessPieceFrom = getChessPieceAtPosition(from);
 
         if (chessPieceFrom == null) {
-            throw new IllegalStateException("Illegal move");
+            throw new IllegalStateException("Критическая ошибка во время хода");
         }
 
         chessPieceFrom.setUntouchedFalse();
@@ -162,7 +162,7 @@ public final class ChessBoard {
         ChessPiece kingChessPieceFrom = getChessPieceAtPosition(kingPositionFrom);
 
         if (rookChessPieceFrom == null || kingChessPieceFrom == null) {
-            throw new IllegalStateException("Illegal castling");
+            throw new IllegalStateException("Критическая ошибка в во время рокировки");
         }
 
         rookChessPieceFrom.setUntouchedFalse();
