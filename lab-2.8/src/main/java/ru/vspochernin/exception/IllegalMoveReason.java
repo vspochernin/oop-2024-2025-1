@@ -1,6 +1,7 @@
 package ru.vspochernin.exception;
 
 public enum IllegalMoveReason {
+
     OUT_OF_BOUNDS("Выход за границы доски"),
     FROM_EQUALS_TO("Начало и конец хода совпадают"),
     CHESS_PIECE_FROM_IS_NULL("Фигура для хода отсутствует"),
