@@ -23,7 +23,9 @@ class BishopTest extends TestWithBoard {
                         "a3 d6",
                         "a6 d3",
                         "d6 f4",
-                        "d3 f5"));
+                        "d3 f5",
+                        "f4 g5",
+                        "f5 g4"));
     }
 
     @Test
