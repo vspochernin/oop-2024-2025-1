@@ -7,9 +7,6 @@ import ru.vspochernin.TestWithBoard;
 import ru.vspochernin.exception.IllegalMoveReason;
 import ru.vspochernin.utils.TestUtils;
 
-/**
- * @author pochernin-vla
- */
 class RookTest extends TestWithBoard {
 
     @Test

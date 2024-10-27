@@ -11,9 +11,6 @@ import ru.vspochernin.pieces.ChessPiece;
 import ru.vspochernin.pieces.King;
 import ru.vspochernin.pieces.Rook;
 
-/**
- * @author pochernin-vla
- */
 public class CastlingUtils {
 
     public static final Position CASTLING0_WHITE_ROOK_FROM = new Position(0, 0);
