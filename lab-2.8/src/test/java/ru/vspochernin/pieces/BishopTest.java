@@ -32,8 +32,7 @@ class BishopTest extends TestWithBoard {
     public void successfulBishopEats() {
         TestUtils.acceptMovesToTheBoardWithoutExceptions(
                 board,
-                List.of(
-                        "b2 b3",
+                List.of("b2 b3",
                         "b7 b6",
                         "c1 a3",
                         "c8 a6",
@@ -46,8 +45,7 @@ class BishopTest extends TestWithBoard {
         TestUtils.acceptMovesToTheBoardWithIllegalMoveReasonAtTheEnd(
                 board,
                 IllegalMoveReason.BISHOP_ILLEGAL_MOVE,
-                List.of(
-                        "b2 b3",
+                List.of("b2 b3",
                         "b7 b6",
                         "c1 a3",
                         "c8 a6",
@@ -59,7 +57,6 @@ class BishopTest extends TestWithBoard {
         TestUtils.acceptMovesToTheBoardWithIllegalMoveReasonAtTheEnd(
                 board,
                 IllegalMoveReason.CHESS_PIECES_BETWEEN,
-                List.of(
-                        "c1 f4"));
+                List.of("c1 f4"));
     }
 }

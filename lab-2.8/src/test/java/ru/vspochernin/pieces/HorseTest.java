@@ -16,8 +16,7 @@ class HorseTest extends TestWithBoard {
     public void successfulHorseMove() {
         TestUtils.acceptMovesToTheBoardWithoutExceptions(
                 board,
-                List.of(
-                        "b1 a3",
+                List.of("b1 a3",
                         "b8 a6",
                         "a3 c4",
                         "a6 c5",
@@ -31,8 +30,7 @@ class HorseTest extends TestWithBoard {
     public void successfulHorseEats() {
         TestUtils.acceptMovesToTheBoardWithoutExceptions(
                 board,
-                List.of(
-                        "b1 a3",
+                List.of("b1 a3",
                         "b8 a6",
                         "a3 b5",
                         "a6 b4",

@@ -16,8 +16,7 @@ class RookTest extends TestWithBoard {
     public void successfulRookMove() {
         TestUtils.acceptMovesToTheBoardWithoutExceptions(
                 board,
-                List.of(
-                        "a2 a4",
+                List.of("a2 a4",
                         "a7 a5",
                         "a1 a3",
                         "a8 a6",
@@ -31,8 +30,7 @@ class RookTest extends TestWithBoard {
     public void successfulRookEats() {
         TestUtils.acceptMovesToTheBoardWithoutExceptions(
                 board,
-                List.of(
-                        "a2 a4",
+                List.of("a2 a4",
                         "a7 a5",
                         "a1 a3",
                         "a8 a6",
@@ -48,8 +46,7 @@ class RookTest extends TestWithBoard {
         TestUtils.acceptMovesToTheBoardWithIllegalMoveReasonAtTheEnd(
                 board,
                 IllegalMoveReason.ROOK_ILLEGAL_MOVE,
-                List.of(
-                        "a2 a4",
+                List.of("a2 a4",
                         "a7 a5",
                         "a1 a3",
                         "a8 a6",

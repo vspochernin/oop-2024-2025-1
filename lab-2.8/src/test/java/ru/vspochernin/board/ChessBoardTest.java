@@ -65,8 +65,7 @@ class ChessBoardTest extends TestWithBoard {
         TestUtils.acceptMovesToTheBoardWithIllegalMoveReasonAtTheEnd(
                 board,
                 IllegalMoveReason.EAT_YOUR_CHESS_PIECE,
-                List.of(
-                        "e2 e3",
+                List.of("e2 e3",
                         "e7 e6",
                         "f2 e3"));
     }

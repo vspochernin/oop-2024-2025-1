@@ -13,8 +13,7 @@ class PawnTest extends TestWithBoard {
     public void successfulPawnOneCellMove() {
         TestUtils.acceptMovesToTheBoardWithoutExceptions(
                 board,
-                List.of(
-                        "e2 e3",
+                List.of("e2 e3",
                         "d7 d6"));
     }
 
@@ -22,8 +21,7 @@ class PawnTest extends TestWithBoard {
     public void successfulPawnTwoCellMove() {
         TestUtils.acceptMovesToTheBoardWithoutExceptions(
                 board,
-                List.of(
-                        "e2 e4",
+                List.of("e2 e4",
                         "d7 d5"));
     }
 
@@ -31,8 +29,7 @@ class PawnTest extends TestWithBoard {
     public void blockedPawnOneCellMoveFail() {
         TestUtils.acceptMovesToTheBoardWithoutExceptions(
                 board,
-                List.of(
-                        "e2 e4",
+                List.of("e2 e4",
                         "d7 d5",
                         "e4 e5",
                         "d5 d4",
@@ -53,8 +50,7 @@ class PawnTest extends TestWithBoard {
     public void blockedPawnTwoCellMoveFail() {
         TestUtils.acceptMovesToTheBoardWithoutExceptions(
                 board,
-                List.of(
-                        "e2 e4",
+                List.of("e2 e4",
                         "d7 d5",
                         "e4 e5",
                         "d5 d4",
@@ -75,8 +71,7 @@ class PawnTest extends TestWithBoard {
     public void successfulPawnEats() {
         TestUtils.acceptMovesToTheBoardWithoutExceptions(
                 board,
-                List.of(
-                        "c2 c4",
+                List.of("c2 c4",
                         "c7 c5",
                         "d2 d4",
                         "d7 d5",
